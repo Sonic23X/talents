@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\{
+    Work
+};
+use Illuminate\Support\Facades\Redirect;
 
 class SettingsController extends Controller
 {
@@ -80,5 +84,45 @@ class SettingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the works resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexW()
+    {
+        $data = [
+            'works' => Work::all(),
+        ];
+        return view('pages.works.index', $data);
+    }
+
+    /**
+     * Show the form for creating a new work resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createW()
+    {
+        return view('pages.works.new');
+    }
+
+    /**
+     * Store a newly created work resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeW(Request $request)
+    {
+        $work = $request->validate([
+            'name' => 'required|string'
+        ]);
+
+        Work::create($work);
+
+        return redirect()->route('work');
     }
 }

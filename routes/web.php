@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     DashboardController,
-    ScanController,
+    SettingsController,
 };
 
 /*
@@ -38,7 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/data', [DashboardController::class, 'data']);
 
-
+    Route::resource('setting', SettingsController::class)->names('config');
+    Route::get('works', [SettingsController::class, 'indexW'])->name('work');
+    Route::get('works/new', [SettingsController::class, 'createW'])->name('workNew');
+    Route::post('works', [SettingsController::class, 'storeW']);
 });
 
 

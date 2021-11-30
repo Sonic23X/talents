@@ -9,7 +9,7 @@
           </ol>
         </div>
         <div class="col-lg-6">
-         
+            {{ $breadcrumb_options ?? '' }}
         </div>
       </div>
     </div>
