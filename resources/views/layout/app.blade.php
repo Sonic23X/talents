@@ -1,119 +1,57 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Demo') }}</title>
-
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-                integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Red+Hat+Display" rel="stylesheet">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('resources/css/main.css') }}">
-        @yield('styles')
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="viho admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities. laravel/framework: ^8.40">
+        <meta name="keywords" content="admin template, viho admin template, dashboard template, flat admin template, responsive admin template, web app">
+        <meta name="author" content="pixelstrap">
+        <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
+        <title>@yield('title')</title>
+        <!-- Google font-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+        <!-- Font Awesome-->
+        @includeIf('layout.partials.css')
     </head>
-    <body class="hold-transition sidebar-collapse">
-        <div class="wrapper">
-            <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <a href="index3.html" class="brand-link text-center">
-                    <span class="brand-text font-weight-light">{{ config('app.name', 'Demo') }}</span>
-                </a>
-
-                <div class="sidebar">
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                        <div class="image">
-                            <img src="{{ asset('resources/plugins/admin-lte/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-                        </div>
-                        <div class="info">
-                            <a href="#" class="d-block">
-                                {{ Auth::user()->name }}
-                            </a>
-                        </div>
-                    </div>
-
-                    <nav class="mt-2">
-                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <li class="nav-item">
-                                <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-home"></i>
-                                    Inicio
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    Usuarios
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-user-tie"></i>
-                                    Clientes
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                                    Cerrar sesión
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </aside>
-
-            <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-                <button class="navbar-toggler" type="button" data-widget="pushmenu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <button class="btn btn-link" type="button" data-widget="pushmenu">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <div class="content-wrapper">
-                <div class="content">
-                    <div class="container-fluid">
-                        <input type="hidden" id="url" value="{{ url('') }}">
-                        <div class="container-fluid mb-5"> <br> </div>
-
-                        @yield('content')
-
-                        <div class="container-fluid mt-4"> <br> </div>
-                    </div>
-                </div>
-            </div>
-
+    <body class="dark-only">
+        <!-- Loader starts-->
+        <div class="loader-wrapper">
+            <div class="theme-loader"></div>
         </div>
-         <!-- jQuery library -->
-        <script src="{{ asset('resources/plugins/jquery/jquery-3.5.1.min.js') }}"></script>
+        <div class="page-wrapper compact-wrapper modern-sidebar" id="pageWrapper">
+            @includeIf('layout.partials.header')
+            <div class="page-body-wrapper modern-sidebar">
+                @includeIf('layout.partials.sidebar')
+                <div class="page-body">
+                    @yield('content')
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 footer-copyright text-center">
+                                <p class="mb-0">Copyright {{date('Y')}}-{{date('y', strtotime('+1 year'))}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            var div = document.querySelector("div.page-wrapper")
+            var b = div.classList.contains('compact-sidebar');
+            if (b)
+                div.classList.remove("compact-sidebar");
+            localStorage.setItem('page-wrapper', 'page-wrapper compact-wrapper modern-sidebar');
+            localStorage.setItem('page-body-wrapper', 'sidebar-icon');
+        </script>
 
-        <!-- Sweet Alert 2 -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        @includeIf('layout.partials.js')
 
-        <!-- Font Awesome 5.13.1 -->
-        <script src="{{ asset('resources/plugins/fontawesome/js/all.min.js') }}"></script>
-
-        @yield('script')
     </body>
 </html>
