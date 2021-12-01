@@ -16,7 +16,7 @@
                         <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="settings"></i><span>Configuración</span></a>
                         <ul class="nav-submenu menu-content">
                             <li>
-                                <a class="submenu-title" href="{{ route('config.index') }}">
+                                <a class="submenu-title" href="{{ route('userAdmin') }}">
                                     Usuarios<span class="sub-arrow"><i class="fa fa-chevron-right"></i></span>
                                 </a>
                             </li>

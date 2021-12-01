@@ -38,7 +38,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/data', [DashboardController::class, 'data']);
 
-    Route::resource('setting', SettingsController::class)->names('config');
+    // Settings
+    Route::get('users/admin', [SettingsController::class, 'indexU'])->name('userAdmin');
+    Route::get('users/admin/new', [SettingsController::class, 'createU'])->name('userAdminNew');
+    Route::post('users/admin', [SettingsController::class, 'storeU']);
     Route::get('works', [SettingsController::class, 'indexW'])->name('work');
     Route::get('works/new', [SettingsController::class, 'createW'])->name('workNew');
     Route::post('works', [SettingsController::class, 'storeW']);

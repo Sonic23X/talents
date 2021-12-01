@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{
-    Work
+    Work,
+    User
 };
 use Illuminate\Support\Facades\Redirect;
 
@@ -124,5 +125,57 @@ class SettingsController extends Controller
         Work::create($work);
 
         return redirect()->route('work');
+    }
+
+    /**
+     * Display a listing of the works resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexU()
+    {
+        $users = User::all()->filter(function ($user) {
+            return $user->hasAnyRole([User::TYPE_ADMIN, User::TYPE_ROOT]);
+        });
+
+        $data = [
+            'users' => $users,
+        ];
+        return view('pages.users.index', $data);
+    }
+
+    /**
+     * Show the form for creating a new work resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createU()
+    {
+        return view('pages.users.new');
+    }
+
+    /**
+     * Store a newly created work resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeU(Request $request)
+    {
+        $userRequest = $request->validate([
+            'name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|confirmed|string',
+        ]);
+
+        $user = User::create($userRequest);
+
+        if ($request->type == 1)
+            $user->assignRole(User::TYPE_ADMIN);
+        else
+            $user->assignRole(User::TYPE_ROOT);
+
+        return redirect()->route('userAdmin');
     }
 }
