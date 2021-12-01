@@ -10,8 +10,9 @@
                         <a class="nav-link menu-title" href="{{route('dashboard')}}"><i data-feather="home"></i><span>Dashboard</span></a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav-link menu-title" href="{{route('dashboard')}}"><i data-feather="trello"></i><span>Perfiles</span></a>
+                        <a class="nav-link menu-title" href="{{url('profiles/admin')}}"><i data-feather="trello"></i><span>Perfiles</span></a>
                     </li>
+                    @if (Auth::user()->hasRole('admin'))
                     <li class="dropdown">
                         <a class="nav-link menu-title" href="javascript:void(0)"><i data-feather="settings"></i><span>Configuración</span></a>
                         <ul class="nav-submenu menu-content">
@@ -27,6 +28,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

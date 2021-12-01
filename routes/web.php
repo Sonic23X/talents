@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     DashboardController,
+    ProfileController,
     SettingsController,
 };
 
@@ -37,6 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/data', [DashboardController::class, 'data']);
+
+    // Profiles
+    Route::resource('profiles/admin', ProfileController::class);
 
     // Settings
     Route::get('users/admin', [SettingsController::class, 'indexU'])->name('userAdmin');

@@ -20,9 +20,9 @@ Inicio - Talents
                                 <i data-feather="user"></i>
                             </div>
                             <div class="media-body">
-                                <span class="m-0">Clientes</span>
+                                <span class="m-0">Perfiles</span>
                                 <h4 class="mb-0 counter">
-                                    6659
+                                    {{ $profiles }}
                                 </h4>
                                 <i class="icon-bg" data-feather="user"></i>
                             </div>
@@ -40,7 +40,7 @@ Inicio - Talents
                             <div class="media-body">
                                 <span class="m-0">Suscripciones</span>
                                 <h4 class="mb-0 counter">
-                                    9856
+                                    {{ $subs }}
                                 </h4>
                                 <i class="icon-bg" data-feather="user-check"></i>
                             </div>
@@ -56,7 +56,7 @@ Inicio - Talents
                             <div class="media-body">
                                 <span class="m-0">Visualizaciones</span>
                                 <h4 class="mb-0 counter">
-                                    893
+                                    {{ $views }}
                                 </h4>
                                 <i class="icon-bg" data-feather="eye"></i>
                             </div>
@@ -72,7 +72,7 @@ Inicio - Talents
                             <div class="media-body">
                                 <span class="m-0">Descargas</span>
                                 <h4 class="mb-0 counter">
-                                    9856
+                                    {{ $downloads }}
                                 </h4>
                                 <i class="icon-bg" data-feather="download"></i>
                             </div>
@@ -103,20 +103,22 @@ Inicio - Talents
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($works as $work)
                                     <tr>
-                                        <td class="f-w-600">Trabajo 1</td>
+                                        <td class="f-w-600">{{ $work->name }}</td>
+                                        @if ($work->deleted_at == null)
                                         <td class="font-primary">Activo</td>
                                         <td>
-                                            <div class="span badge rounded-pill pill-badge-secondary">6523</div>
+                                            <div class="span badge rounded-pill pill-badge-success">0</div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="f-w-600">Trabajo 2</td>
+                                        @else
                                         <td class="font-secondary">Desactivado</td>
                                         <td>
-                                            <div class="span badge rounded-pill pill-badge-success">6523</div>
+                                            <div class="span badge rounded-pill pill-badge-secondary">0</div>
                                         </td>
+                                        @endif
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

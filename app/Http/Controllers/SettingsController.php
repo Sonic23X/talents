@@ -7,7 +7,7 @@ use App\Models\{
     Work,
     User
 };
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
@@ -168,6 +168,8 @@ class SettingsController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|confirmed|string',
         ]);
+
+        $userRequest['password'] = Hash::make($request->password);
 
         $user = User::create($userRequest);
 

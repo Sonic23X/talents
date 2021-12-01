@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'path',
+        'profile_id',
+    ];
+
+    public function imageable() {
+        return $this->morphTo();
+    }
 }
