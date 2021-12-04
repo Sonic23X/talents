@@ -59,7 +59,7 @@ Inicio - Talents
                             <div class="media-body">
                                 <span class="m-0">Visualizaciones</span>
                                 <h4 class="mb-0 counter">
-                                    {{ $views }}
+                                    {{ $profile->views }}
                                 </h4>
                                 <i class="icon-bg" data-feather="eye"></i>
                             </div>
@@ -75,7 +75,7 @@ Inicio - Talents
                             <div class="media-body">
                                 <span class="m-0">Descargas</span>
                                 <h4 class="mb-0 counter">
-                                    {{ $downloads }}
+                                    {{ $profile->downloads }}
                                 </h4>
                                 <i class="icon-bg" data-feather="download"></i>
                             </div>
@@ -83,9 +83,14 @@ Inicio - Talents
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-xl-12 col-lg-12">
-                <a class="btn btn-primary-light" type="button" href="{{ route('userAdminNew') }}">
+            <div class="col-sm-12 col-xl-3 col-lg-12 text-center">
+                <a class="btn btn-primary-light" type="button" href="{{ url('profiles/admin/' . $profile->id) . '/edit' }}">
                     Editar mi perfil
+                </a>
+            </div>
+            <div class="col-sm-12 col-xl-3 col-lg-12 text-center">
+                <a class="btn btn-primary-light" type="button" target="_blank" href="{{ url('profiles/admin/' . $profile->id) }}">
+                    Ver mi perfil
                 </a>
             </div>
             @else

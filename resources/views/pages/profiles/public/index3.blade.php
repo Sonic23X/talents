@@ -24,9 +24,9 @@
 <body>
     <!-- ******HEADER****** -->
     <header class="header">
-        <div class="container">
-            <img class="profile-image img-responsive pull-left" src="images/profile.png" alt="{{ $profile->name }}" />
-            <div class="profile-content pull-left">
+        <div class="container d-flex">
+            <img class="rounded-circle" style="width: 200px" src="{{ asset('storage/'.$profile->picture) }}" alt="{{ $profile->name }}" />
+            <div class="profile-content ms-5">
                 <h1 class="name">{{ $profile->name }}</h1>
                 <h2 class="desc">{{ $work->name }}</h2>
             </div>

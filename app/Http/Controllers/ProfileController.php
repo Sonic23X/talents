@@ -55,19 +55,21 @@ class ProfileController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'apellidos' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|string|email',
-            'password' => 'required|string',
-            'trabajo' => 'required',
+            'password' => 'required|string|confirmed',
+            'work_id' => 'required',
             'phone' => 'required',
             'fb' => '',
             'twitter' => '',
-            'lnkid' => ''
+            'lnkid' => '',
+            'type' => 'required',
+            'description' => 'required'
         ]);
 
         $userData = [
             'name' => $request->name,
-            'last_name' => $request->apellidos,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ];
@@ -75,17 +77,25 @@ class ProfileController extends Controller
         $user = User::create($userData);
         $user->assignRole(User::TYPE_USER);
 
+        // Save Profile photo
+        $path = null;
+        if ($request->has('picture')) {
+            $name =  Str::random(10) . '.' . $request->file('picture')->extension();
+            $path = "profile/{$user->id}/{$name}";
+            $request->file('picture')->storeAs("public/profile/{$user->id}", $name);
+        }
+
         $profileData = [
             'uuid' => Str::uuid(),
             'name' => $request->name . ' ' . $request->last_name,
-            'description' => $request->about,
+            'description' => $request->description,
             'phone' => $request->phone,
             'facebook' => $request->fb,
             'twitter' => $request->twitter,
             'linkedin' => $request->lnkid,
-            'work_id' => $request->trabajo,
-            'picture' => null,
-            'type' => 1,
+            'work_id' => $request->work_id,
+            'picture' => $path,
+            'type' => $request->type,
             'user_id' => $user->id,
             'client_id' => Auth::user()->id,
             'views' => 0,
@@ -94,7 +104,7 @@ class ProfileController extends Controller
 
         Profile::create($profileData);
 
-        return response()->json([], 200);
+        return redirect('profiles/admin');
     }
 
     /**
@@ -144,12 +154,16 @@ class ProfileController extends Controller
             'facebook' => '',
             'twitter' => '',
             'linkedin' => '',
-            'work_id' => 'required'
+            'work_id' => 'required',
+            'type' => 'required'
         ]);
 
         Profile::findOrFail($id)->update($profileData);
 
-        return redirect('profiles/admin');
+        if (Auth::user()->hasRole('user'))
+            return redirect('dashboard');
+        else
+            return redirect('profiles/admin');
     }
 
     public function vcard($id)

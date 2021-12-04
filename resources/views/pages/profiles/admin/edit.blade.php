@@ -28,6 +28,14 @@ Usuarios - Talents
                                 <input type="number" class="form-control w-75" id="telefono" name="phone" aria-describedby="nombre" value="{{ $profile->phone }}">
                             </div>
                             <div class="mb-3">
+                                <label for="tipo" class="form-label">Vista</label>
+                                <select name="type" id="tipo" class="form-select w-75">
+                                    <option value="1" @if ($profile->type == 1) selected @endif>Tipo A</option>
+                                    <option value="2" @if ($profile->type == 2) selected @endif>Tipo B</option>
+                                    <option value="3" @if ($profile->type == 3) selected @endif>Tipo C</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="fb" class="form-label">Facebook</label>
                                 <input type="text" class="form-control w-75" id="fb" name="fb" aria-describedby="nombre" value="{{ $profile->facebook }}">
                             </div>
@@ -41,7 +49,7 @@ Usuarios - Talents
                             </div>
                             <div class="mb-3">
                                 <label for="trabajo" class="form-label">Trabajo</label>
-                                <select name="work" id="work_id" class="form-select w-75">
+                                <select name="work_id" id="work" class="form-select w-75">
                                     @foreach ($works as $work)
                                     @if ($profile->work_id == $work->id)
                                     <option value="{{ $work->id }}" selected>{{ $work->name }}</option>

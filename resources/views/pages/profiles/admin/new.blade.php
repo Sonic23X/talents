@@ -20,72 +20,70 @@ Usuarios - Talents
                         <h4>Datos importantes</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ url('profiles/admin') }}" id="basic">
+                        <form method="POST" action="{{ url('profiles/admin') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre(s)</label>
-                                <input type="text" class="form-control w-75" id="nombre" name="name" aria-describedby="nombre">
+                                <input type="text" class="form-control w-75" id="nombre" name="name" aria-describedby="nombre" required>
                             </div>
                             <div class="mb-3">
                                 <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control w-75" id="apellidos" name="last_name" aria-describedby="apellidos">
+                                <input type="text" class="form-control w-75" id="apellidos" name="last_name" aria-describedby="apellidos" required>
                             </div>
                             <div class="mb-3">
                                 <label for="correo" class="form-label">Correo</label>
-                                <input type="email" class="form-control w-75" id="correo" name="email" aria-describedby="correo">
+                                <input type="email" class="form-control w-75" id="correo" name="email" aria-describedby="correo" required>
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Teléfono</label>
-                                <input type="number" class="form-control w-75" id="telefono" name="phone" aria-describedby="nombre">
+                                <input type="number" class="form-control w-75" id="telefono" name="phone" aria-describedby="telefono" required>
                             </div>
                             <div class="mb-3">
                                 <label for="contrasena" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control w-75" id="contrasena" name="password" aria-describedby="contrasena">
+                                <input type="password" class="form-control w-75" id="contrasena" name="password" aria-describedby="contrasena" required>
                             </div>
                             <div class="mb-3">
                                 <label for="contrasena" class="form-label">Repetir contraseña</label>
-                                <input type="password" class="form-control w-75" id="r_contrasena" name="password_confirmation" aria-describedby="contrasena">
+                                <input type="password" class="form-control w-75" id="r_contrasena" name="password_confirmation" aria-describedby="contrasena" required>
                             </div>
                             <div class="mb-3">
                                 <label for="trabajo" class="form-label">Trabajo</label>
-                                <select name="work" id="trabajo" class="form-select w-75">
+                                <select name="work_id" id="trabajo" class="form-select w-75">
                                     @foreach ($works as $work)
                                     <option value="{{ $work->id }}">{{ $work->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
+                                <label for="tipo" class="form-label">Vista</label>
+                                <select name="type" id="tipo" class="form-select w-75">
+                                    <option value="1">Tipo A</option>
+                                    <option value="2">Tipo B</option>
+                                    <option value="3">Tipo C</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="about" class="form-label">Acerca de </label>
-                                <textarea class="form-control w-75" id="about" name="about" aria-describedby="about"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-75">Continuar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="col-xl-12 xl-100 box-col-12 d-none" id="part2">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Imagenes</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ url('users/admin') }}" id="photos">
-                            @csrf
-                            <div class="mb-3 w-75">
-                                <label for="photo" class="form-label">Foto de perfil</label>
-                                <input class="form-control form-control-sm" type="file" id="photo">
+                                <textarea class="form-control w-75" id="about" name="description" aria-describedby="about"></textarea>
                             </div>
                             <div class="mb-3 w-75">
-                                <label for="port" class="form-label">Portafolio</label>
-                                <input class="form-control form-control-sm" type="file" id="port" multiple="multiple">
+                                <label for="photo-profile" class="form-label">Foto de perfil</label>
+                                <input class="form-control form-control-sm" name="picture" id="photo-profile" type="file"  accept="image/*">
                             </div>
                             <button type="submit" class="btn btn-primary w-75">Guardar</button>
                         </form>
+                        @if ($errors->any())
+                        <div class="alert alert-danger mt-3 w-75" role="alert">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
-            -->
         </div>
     </div>
 @endsection
@@ -93,44 +91,6 @@ Usuarios - Talents
 @section('script')
 <script type="text/javascript">
     $(document).ready(() => {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#basic').submit(event => {
-            event.preventDefault();
-
-            if($('#contrasena').val() != $('#r_contrasena').val()) {
-                alert('las contraseñas no coinciden');
-                return;
-            }
-
-            let data = {
-                name: $('#nombre').val(),
-                apellidos: $('#apellidos').val(),
-                email: $('#correo').val(),
-                phone: $('#telefono').val(),
-                password: $('#contrasena').val(),
-                trabajo: $('#trabajo').val(),
-                about : $('#about').val(),
-            };
-
-            $.ajax({
-                url: $('#basic').attr('action'),
-                type: 'POST',
-                dataType: 'json',
-                data: data
-            })
-            .done( response => {
-                window.location.href = `{{ url('profiles/admin') }}`;
-            })
-            .fail( jqXHR => {
-                console.log(jqXHR);
-            });
-        });
 
     });
 </script>

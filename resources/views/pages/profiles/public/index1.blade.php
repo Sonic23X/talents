@@ -21,7 +21,7 @@
     <div class="wrapper mt-lg-5">
         <div class="sidebar-wrapper">
             <div class="profile-container">
-                <img class="profile" src="assets/images/profile.png" alt="" />
+                <img class="img-fluid rounded" src="{{ asset('storage/'.$profile->picture) }}" alt="" />
                 <h1 class="name">{{ $profile->name }}</h1>
                 <h3 class="tagline">{{ $work->name }}</h3>
             </div>
