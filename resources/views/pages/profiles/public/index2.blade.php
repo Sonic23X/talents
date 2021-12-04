@@ -101,9 +101,17 @@
                 <section class="resume-section summary-section mb-5">
 				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Portafolio</h2>
 				    <div class="resume-section-content">
-					    <p class="mb-0">
-
+                        @if ($images != null)
+                        @foreach ($images as $image)
+                        <p>
+                            <img class="img-fluid" src="{{ asset('storage/'.$image->path) }}" alt="Portafolio {{ $image->id }}">
                         </p>
+                        @endforeach
+                        @else
+                        <p class="mb-0">
+                            Sin portafolio
+                        </p>
+                        @endif
 				    </div>
 			    </section>
 		    </div>

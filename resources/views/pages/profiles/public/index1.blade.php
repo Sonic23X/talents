@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     @endif
-                    @if ($profile->fb != '')
+                    @if ($profile->facebook != '')
                     <li class="linkedin">
                         <i class="fab fa-facebook"></i>
                         <a href="{{ $profile->fb }}" target="_blank" class="text-decoration-none">
@@ -73,20 +73,21 @@
 
             <section class="section experiences-section">
                 <h2 class="section-title"><span class="icon-holder"><i class="fas fa-briefcase"></i></span>Portafolio de trabajos</h2>
-
+                @if ($images != null)
+                @foreach ($images as $image)
                 <div class="item">
-                    <div class="meta">
-                        <div class="upper-row">
-                            <h3 class="job-title">Lead Developer</h3>
-                            <div class="time">2019 - Present</div>
-                        </div><!--//upper-row-->
-                        <div class="company">Startup Hubs, San Francisco</div>
-                    </div><!--//meta-->
                     <div class="details">
-                        <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo.</p>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
-                    </div><!--//details-->
-                </div><!--//item-->
+                        <img class="img-fluid" src="{{ asset('storage/'.$image->path) }}" alt="Portafolio {{ $image->id }}">
+                    </div>
+                </div>
+                @endforeach
+                @else
+                <div class="item">
+                    <div class="details">
+                        <p>Sin imagenes</p>
+                    </div>
+                </div>
+                @endif
             </section>
         </div>
     </div>

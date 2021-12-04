@@ -53,38 +53,18 @@
                         <div class="content">
 
                             <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" >
-                                <img class="img-responsive project-image" src="images/projects/project-4.png" alt="project name" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a >Velocity - Designed for Products</a></h3>
-                                    <p>You can put one of your secondary projects here. Suspendisse in tellus dolor. Vivamus a tortor eu turpis pharetra consequat quis non metus. Aliquam aliquam, orci eu suscipit pellentesque, mauris dui tincidunt enim, eget iaculis ante dolor non turpis.</p>
-                                    <p><a class="more-link"><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->
+                                @if ($images != null)
+                                @foreach ($images as $image)
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img class="img-fluid mb-2" src="{{ asset('storage/'.$image->path) }}" alt="Portafolio {{ $image->id }}">
+                                </div>
+                                @endforeach
+                                @else
+                                <div class="col-md-6 col-sm-6 col-xs-12" >
+                                    <span>Sin portafolio</span>
+                                </div>
+                                @endif
                             </div><!--//item-->
-
-                            <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12">
-                                <img class="img-responsive project-image" src="images/projects/project-1.png" alt="project name" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a >Tempo - Designed for Startups</a></h3>
-                                    <p>You can put one of your secondary projects here. Suspendisse in tellus dolor. Vivamus a tortor eu turpis pharetra consequat quis non metus. Aliquam aliquam, orci eu suscipit pellentesque, mauris dui tincidunt enim, eget iaculis ante dolor non turpis.</p>
-                                    <p><a class="more-link"><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->
-                            </div><!--//item-->
-
-                            <div class="item row">
-                                <a class="col-md-4 col-sm-4 col-xs-12" >
-                                <img class="img-responsive project-image" src="images/projects//project-2.png" alt="project name" />
-                                </a>
-                                <div class="desc col-md-8 col-sm-8 col-xs-12">
-                                    <h3 class="title"><a >Delta - Designed for Mobile Apps</a></h3>
-                                    <p> You can put one of your secondary projects here. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-                                    <p><a class="more-link" ><i class="fa fa-external-link"></i> Find out more</a></p>
-                                </div><!--//desc-->
-                            </div><!--//item-->
-
                         </div><!--//content-->
                     </div><!--//section-inner-->
                 </section><!--//section-->

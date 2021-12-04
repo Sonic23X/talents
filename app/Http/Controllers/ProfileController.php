@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 use App\Models\{
     Profile,
     User,
-    Work
+    Work,
+    Image
 };
 
 class ProfileController extends Controller
@@ -102,7 +103,19 @@ class ProfileController extends Controller
             'downloads' => 0
         ];
 
-        Profile::create($profileData);
+        $profile = Profile::create($profileData);
+
+        $files = $request->file('portafolio');
+
+        if ($request->hasFile('portafolio')) {
+            foreach ($files as $file) {
+                $name =  Str::random(10) . '.' . $file->extension();
+                $pathP = "portafolio/{$profile->id}/{$name}";
+                $file->storeAs('public/portafolio/' . $profile->id, $name);
+
+                Image::create(['path' => $pathP, 'profile_id' => $profile->id]);
+            }
+        }
 
         return redirect('profiles/admin');
     }
@@ -115,15 +128,16 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profile = Profile::find($id);
+        $profile = Profile::findOrFail($id);
         $work = Work::find($profile->work_id);
         $user = User::find($profile->user_id);
+        $images = Image::where('profile_id', $id)->get();
         if ($profile->type == 1)
-            return view('pages.profiles.public.index1', compact('profile', 'work', 'user'));
+            return view('pages.profiles.public.index1', compact('profile', 'work', 'user', 'images'));
         else if ($profile->type == 2)
-            return view('pages.profiles.public.index2', compact('profile', 'work', 'user'));
+            return view('pages.profiles.public.index2', compact('profile', 'work', 'user', 'images'));
         else
-            return view('pages.profiles.public.index3', compact('profile', 'work', 'user'));
+            return view('pages.profiles.public.index3', compact('profile', 'work', 'user', 'images'));
     }
 
     /**
@@ -172,7 +186,7 @@ class ProfileController extends Controller
         $user = User::findOrFail($profile->user_id);
 
         // Update download
-        $profile->download += 1;
+        $profile->downloads += 1;
         $profile->save();
 
         $vcard = new VCard();
