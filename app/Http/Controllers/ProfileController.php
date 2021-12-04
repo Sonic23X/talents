@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use JeroenDesloovere\VCard\VCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -104,7 +105,15 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile = Profile::find($id);
+        $work = Work::find($profile->work_id);
+        $user = User::find($profile->user_id);
+        if ($profile->type == 1)
+            return view('pages.profiles.public.index1', compact('profile', 'work', 'user'));
+        else if ($profile->type == 2)
+            return view('pages.profiles.public.index2', compact('profile', 'work', 'user'));
+        else
+            return view('pages.profiles.public.index3', compact('profile', 'work', 'user'));
     }
 
     /**
@@ -143,14 +152,35 @@ class ProfileController extends Controller
         return redirect('profiles/admin');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function vcard($id)
     {
-        //
+        $profile = Profile::findOrFail($id);
+        $user = User::findOrFail($profile->user_id);
+
+        // Update download
+        $profile->download += 1;
+        $profile->save();
+
+        $vcard = new VCard();
+        $vcard->addName($user->last_name, $user->name);
+        $vcard->addEmail($user->email);
+        $vcard->addPhoneNumber($profile->phone, 'PREF');
+        return $vcard->download();
+    }
+
+    public function showPublic($uuid)
+    {
+        $profile = Profile::where('uuid', $uuid)->firstOrFail();
+        $profile->views += 1;
+        $profile->save();
+
+        $work = Work::find($profile->work_id);
+        $user = User::find($profile->user_id);
+        if ($profile->type == 1)
+            return view('pages.profiles.public.index1', compact('profile', 'work', 'user'));
+        else if ($profile->type == 2)
+            return view('pages.profiles.public.index2', compact('profile', 'work', 'user'));
+        else
+            return view('pages.profiles.public.index3', compact('profile', 'work', 'user'));
     }
 }

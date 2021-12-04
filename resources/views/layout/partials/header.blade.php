@@ -22,7 +22,7 @@
             <div class="mode"><i class="fa fa-lightbulb-o"></i></div>
         </li>
         <li class="onhover-dropdown p-0">
-          <button class="btn btn-primary-light" type="button"><i data-feather="log-out"></i>Salir</button>
+          <a class="btn btn-primary-light" type="button" href="{{ route('logout') }}"><i data-feather="log-out"></i>Salir</a>
         </li>
       </ul>
     </div>

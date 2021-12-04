@@ -12,6 +12,7 @@ Inicio - Talents
     @endcomponent
     <div class="container-fluid">
         <div class="row">
+            @if (Auth::user()->hasAnyRole(['admin', 'client']))
             <div class="col-sm-6 col-xl-3 col-lg-6">
                 <div class="card o-hidden border-0">
                     <div class="bg-primary b-r-4 card-body">
@@ -48,6 +49,46 @@ Inicio - Talents
                     </div>
                 </div>
             </div>
+            @endif
+            @if (Auth::user()->hasRole('user'))
+            <div class="col-sm-6 col-xl-6 col-lg-6">
+                <div class="card o-hidden border-0">
+                    <div class="bg-primary b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="align-self-center text-center"><i data-feather="eye"></i></div>
+                            <div class="media-body">
+                                <span class="m-0">Visualizaciones</span>
+                                <h4 class="mb-0 counter">
+                                    {{ $views }}
+                                </h4>
+                                <i class="icon-bg" data-feather="eye"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-6 col-lg-6">
+                <div class="card o-hidden border-0">
+                    <div class="bg-secondary b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="align-self-center text-center"><i data-feather="download"></i></div>
+                            <div class="media-body">
+                                <span class="m-0">Descargas</span>
+                                <h4 class="mb-0 counter">
+                                    {{ $downloads }}
+                                </h4>
+                                <i class="icon-bg" data-feather="download"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xl-12 col-lg-12">
+                <a class="btn btn-primary-light" type="button" href="{{ route('userAdminNew') }}">
+                    Editar mi perfil
+                </a>
+            </div>
+            @else
             <div class="col-sm-6 col-xl-3 col-lg-6">
                 <div class="card o-hidden border-0">
                     <div class="bg-primary b-r-4 card-body">
@@ -80,6 +121,9 @@ Inicio - Talents
                     </div>
                 </div>
             </div>
+            @endif
+
+            @if (Auth::user()->hasRole('admin'))
             <div class="col-xl-6 xl-100 box-col-12">
                 <div class="card">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
@@ -125,6 +169,7 @@ Inicio - Talents
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @endsection

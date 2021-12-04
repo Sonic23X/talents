@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\{
     DashboardController,
     ProfileController,
@@ -37,18 +38,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('dashboard/data', [DashboardController::class, 'data']);
 
-    // Profiles
-    Route::resource('profiles/admin', ProfileController::class);
+        // Profiles
+        Route::resource('profiles/admin', ProfileController::class);
 
-    // Settings
-    Route::get('users/admin', [SettingsController::class, 'indexU'])->name('userAdmin');
-    Route::get('users/admin/new', [SettingsController::class, 'createU'])->name('userAdminNew');
-    Route::post('users/admin', [SettingsController::class, 'storeU']);
-    Route::get('works', [SettingsController::class, 'indexW'])->name('work');
-    Route::get('works/new', [SettingsController::class, 'createW'])->name('workNew');
-    Route::post('works', [SettingsController::class, 'storeW']);
+        // Settings
+        Route::get('users/admin', [SettingsController::class, 'indexU'])->name('userAdmin');
+        Route::get('users/admin/new', [SettingsController::class, 'createU'])->name('userAdminNew');
+        Route::post('users/admin', [SettingsController::class, 'storeU']);
+        Route::get('works', [SettingsController::class, 'indexW'])->name('work');
+        Route::get('works/new', [SettingsController::class, 'createW'])->name('workNew');
+        Route::post('works', [SettingsController::class, 'storeW']);
 });
 
-
+Route::get('vcard/download/{id}', [ProfileController::class, 'vcard']);
+Route::get('talent/{uuid}', [ProfileController::class, 'showPublic']);
